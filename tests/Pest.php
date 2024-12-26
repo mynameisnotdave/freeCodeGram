@@ -26,7 +26,7 @@ pest()->extend(Tests\TestCase::class)
 |
 */
 
-expect()->extend('toBeOne', function () {
+expect()->extend(name: 'toBeOne', extend: function (): mixed {
     return $this->toBe(1);
 });
 
