@@ -10,6 +10,8 @@ class JobListing extends Model
     /** @use HasFactory<\Database\Factories\JobListingFactory> */
     use HasFactory;
 
+    protected $fillable = ['title', 'salary', 'employer_id'];
+
     // Navigation principal
     public function employer() {
         return $this->belongsTo(Employer::class);

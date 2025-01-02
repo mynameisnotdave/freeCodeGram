@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Employer;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use NumberFormatter;
+use Random\Randomizer;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\JobListing>
@@ -20,7 +22,8 @@ class JobListingFactory extends Factory
         return [
             'title' => fake()->jobTitle(),
             'employer_id' => Employer::factory(),
-            'salary' => 50000
+            'salary' => random_int(10000, 100000)
         ];
+        
     }
 }
