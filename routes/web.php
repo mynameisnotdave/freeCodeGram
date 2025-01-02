@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobListingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Arr;
 use App\Models\JobListing;
@@ -11,13 +12,7 @@ $rules = [
 
 Route::get('/', fn() => view('home'));
 
-Route::get('/jobs', function () {
-    // ::with()->get() eager loads and prevents excessive queries
-    //$jobs = JobListing::with('employer')->get();
-    // Even better is paginate...
-    $jobs = JobListing::with('employer')->latest()->paginate(3);
-    return view('jobs.index', ['jobs' => $jobs]);
-});
+Route::get('/jobs', [JobListingController::class, 'index']);
 
 // Create
 Route::get('/jobs/create', fn() => view('jobs.create'));
@@ -57,11 +52,11 @@ Route::patch('/jobs/{job}', function (JobListing $job) use ($rules) {
     ]);
 
     return redirect('/jobs/' . $job->id);
-    
 });
 
 // Delete
 Route::delete('/jobs/{id}', function (JobListing $job) use ($rules) {
+
     $job->delete();
 
     return redirect("/jobs/");
