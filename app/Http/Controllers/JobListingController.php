@@ -7,7 +7,11 @@ use App\Models\JobListing;
 
 class JobListingController extends Controller
 {
-    //
+    private $rules = [
+        'title' => ['required', 'min:3', 'alpha-dash'],
+        'salary' => ['required', 'numeric', 'digits_between:4, 6']
+    ];
+
     public function index()
     {
         //::with()->get() eager loads and prevents excessive queries
@@ -17,15 +21,49 @@ class JobListingController extends Controller
         return view('jobs.index', ['jobs' => $jobs]);
     }
 
-    public function create() {}
+    public function create()
+    {
+        return view('jobs.create');
+    }
 
-    public function show() {}
+    public function show(JobListing $job)
+    {
+        return view('jobs.show', ['job' => $job]);
+    }
 
-    public function store(Request $request) {}
+    public function store()
+    {
+        request()->validate($this->rules);
 
-    public function edit($id) {}
+        JobListing::create([
+            'title' => request('title'),
+            'salary' => request('salary'),
+            'employer_id' => 1
+        ]);
+        return redirect('/jobs');
+    }
 
-    public function update(Request $request, $id) {}
+    public function edit(JobListing $job)
+    {
+        return view('jobs.edit', ['job' => $job]);
+    }
 
-    public function destroy($id) {}
+    public function update(JobListing $job)
+    {
+        request()->validate($this->rules);
+
+        $job->update([
+            'title' => request('title'),
+            'salary' => request('salary'),
+        ]);
+
+        return redirect('/jobs/' . $job->id);
+    }
+
+    public function destroy(JobListing $job)
+    {
+        $job->delete();
+
+        return redirect("/jobs/");
+    }
 }
