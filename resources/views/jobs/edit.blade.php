@@ -39,11 +39,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <x-linkbutton href="/jobs/{{ $job->id }}">Cancel</x-linkbutton>
-                    <button type="submit"
+                <div class="mt-6 flex items-center justify-between gap-x-6">
+                    <div class="flex items-center">
+                        <button form="delete-form" class="bg-red-500 text-sm font-bold text-white rounded-md p-2 transition-colors duration-500 hover:bg-red-800">Delete</button>
+                    </div>
+                    <div class="flex items-center gap-x-6">
+                        <x-linkbutton href="/jobs/{{ $job->id }}">Cancel</x-linkbutton>
+                        <button type="submit"
                         class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Update</button>
+                    </div>
                 </div>
     </form>
-
+    <form method="POST" action="/jobs/{{$job->id}}" id="delete-form" class="hidden">
+        @csrf
+        @method('DELETE')
+    </form>
 </x-layout>
