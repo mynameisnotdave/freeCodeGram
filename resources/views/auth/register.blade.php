@@ -15,7 +15,7 @@
                     </x-form-field>
 
                     <x-form-field>
-                        <x-form-label for="email_address">Email address</label>
+                        <x-form-label for="email_address">Email address</x-form-label>
                             <div class="mt-2">
                                 <x-form-input type="email" name="email_address" id="email_address"
                                     placeholder="joe@joe.com" required />
